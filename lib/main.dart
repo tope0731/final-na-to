@@ -1,8 +1,7 @@
 import 'package:camera/camera.dart';
+import 'package:final_ito/drawer/list_of_object.dart';
 import 'package:final_ito/screens/home_screen.dart';
-import 'package:final_ito/screens/login/loading_screen.dart';
-import 'package:final_ito/screens/scanner/camera_screen.dart';
-import 'package:final_ito/screens/scanner/object_in_sentence_screen.dart';
+import 'package:final_ito/screens/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 
 late List<CameraDescription> cameras;
@@ -18,8 +17,13 @@ class iSee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: Colors.blue, size: 50),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      home: LoadingScreen(),
+      home: onBoardingScreen(),
     );
   }
 }

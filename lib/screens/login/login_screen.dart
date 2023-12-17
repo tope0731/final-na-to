@@ -1,5 +1,8 @@
 import 'package:final_ito/screens/home_screen.dart';
+import 'package:final_ito/screens/login/signup.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,120 +12,126 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController _userController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "assets/images/loading.png",
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Column(
-            children: <Widget>[
-              Container(
-                height: 400,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/bear.png'),
-                      fit: BoxFit.fill),
-                ),
-                child: Stack(
-                  children: <Widget>[
-                    Positioned(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 300),
-                        child: Center(
-                          child: Text(
-                            "iSee",
-                            style: TextStyle(
-                                color: Color.fromRGBO(0, 169, 255, 1),
-                                fontSize: 40,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            children: [
+              Gap(40),
+              Center(
+                child: Text(
+                  'iSee',
+                  style: TextStyle(
+                    fontSize: 60,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF056FD0),
+                  ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(30.0),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border:
-                              Border.all(color: Color.fromRGBO(0, 169, 255, 1)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(116, 174, 246, 0.6),
-                              blurRadius: 10.0,
-                              offset: Offset(0, 2),
-                            )
-                          ]),
-                      child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color:
-                                            Color.fromRGBO(0, 169, 255, 1)))),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Username",
-                                  hintStyle:
-                                      TextStyle(color: Colors.grey[700])),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Password",
-                                  hintStyle:
-                                      TextStyle(color: Colors.grey[700])),
-                            ),
-                          )
-                        ],
-                      ),
+              Center(
+                child: Text(
+                  '"See the world differently"',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF056FD0),
+                  ),
+                ),
+              ),
+              Gap(120),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue),
-                      child: Center(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const HomePageScreen(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Log in',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.w600),
+                            ),
+                            Gap(25),
+                            Text(
+                              'Here User!, put your name and password below. ',
+                              style: TextStyle(fontSize: 19),
+                            ),
+                            Gap(30),
+                            TextField(
+                              controller: _userController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Username',
                               ),
-                            );
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
+                            ),
+                            Gap(15),
+                            TextField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: 'Password',
+                              ),
+                            ),
+                            Gap(20),
+                            Container(
+                              height: 55,
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xFF89CFF3),
+                                  fixedSize: Size(175, 50),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => HomePageScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Login',
+                                  style: TextStyle(fontSize: 26),
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (_) => SignupScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text('Signup'),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 70,
-                    ),
-                  ],
+                  ),
                 ),
               )
             ],

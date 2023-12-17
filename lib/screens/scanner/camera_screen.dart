@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:final_ito/main.dart';
 import 'package:final_ito/screens/scanner/image_description.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tflite_v2/tflite_v2.dart';
 
@@ -10,10 +11,10 @@ class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
 
   @override
-  State<CameraScreen> createState() => _CameraScreenState();
+  State<CameraScreen> createState() => _nameState();
 }
 
-class _CameraScreenState extends State<CameraScreen> {
+class _nameState extends State<CameraScreen> {
   late CameraController _controller;
   File? file;
   var _recognitions;
@@ -46,7 +47,7 @@ class _CameraScreenState extends State<CameraScreen> {
   loadmodel() async {
     await Tflite.loadModel(
       model: "assets/model/model.tflite",
-      labels: "assets/model/labels.txt",
+      labels: "assets/model/label.txt",
     );
   }
 
@@ -77,11 +78,17 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        extendBodyBehindAppBar: true,
+        body: Stack(
           children: [
             Container(
+              width: double.infinity,
               height: double.infinity,
               child: CameraPreview(_controller),
             ),
@@ -91,7 +98,15 @@ class _CameraScreenState extends State<CameraScreen> {
               children: [
                 Center(
                   child: Container(
+                    height: 50,
+                    width: double.infinity,
                     margin: EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF89CFF3),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
                     child: MaterialButton(
                       onPressed: () async {
                         try {
@@ -134,8 +149,13 @@ class _CameraScreenState extends State<CameraScreen> {
                           return null;
                         }
                       },
-                      color: Colors.white,
-                      child: Text("Take Picture"),
+                      child: Text(
+                        "Take Picture",
+                        style: TextStyle(
+                          fontSize: 23,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ),

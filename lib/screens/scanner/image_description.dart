@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
+import 'package:final_ito/components/object.dart';
+import 'package:final_ito/screens/home_screen.dart';
 import 'package:final_ito/screens/scanner/object_in_sentence_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 class ImageDescription extends StatefulWidget {
   ImageDescription(this.file, this.label, this.confidence, {super.key});
@@ -47,17 +51,60 @@ class _nameState extends State<ImageDescription> {
     XFile files = XFile(widget.file.path);
     File picture = File(widget.file.path);
     String label = widget.label;
+    int object = 0;
+
+    if (widget.label == 'BAG') {
+      object = 0;
+    } else if (widget.label == 'BOOK') {
+      object = 1;
+    } else if (widget.label == 'CHAIR') {
+      object = 2;
+    } else if (widget.label == 'RULER') {
+      object = 3;
+    } else if (widget.label == 'PENCIL') {
+      object = 4;
+    } else if (widget.label == 'NOTEBOOK') {
+      object = 5;
+    } else if (widget.label == 'CRAYONS') {
+      object = 6;
+    } else if (widget.label == 'ERASER') {
+      object = 7;
+    } else if (widget.label == 'SHOES') {
+      object = 8;
+    } else if (widget.label == 'SCISSORS') {
+      object = 9;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Image Description"),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => HomePageScreen(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.home,
+              size: 50,
+            ),
+          ),
+          Gap(10),
+        ],
       ),
+      extendBodyBehindAppBar: true,
       body: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              "assets/images/for_scanner.png",
+              "assets/images/description_bg.png",
             ),
             fit: BoxFit.cover,
           ),
@@ -66,13 +113,13 @@ class _nameState extends State<ImageDescription> {
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
+                    Gap(90),
                     Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 3),
+                        border: Border.all(color: Color(0xFF89CFF3), width: 4),
                       ),
                       height: 299,
                       width: 171,
@@ -90,9 +137,10 @@ class _nameState extends State<ImageDescription> {
                         Text(
                           widget.label,
                           style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF056FD0),
+                          ),
                         ),
                         IconButton(
                           onPressed: () async {
@@ -105,55 +153,108 @@ class _nameState extends State<ImageDescription> {
                           icon: Icon(
                             isPlaying ? Icons.pause : Icons.play_arrow,
                           ),
-                          iconSize: 20,
-                          color: Colors.white,
+                          iconSize: 24,
+                          color: Color(0xFF056FD0),
                         ),
                       ],
                     ),
                     // for checking
-                    Text(
-                      'Confidence level: ${widget.confidence}',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    // Text(
+                    //   'Confidence level: ${widget.confidence}',
+                    //   style: TextStyle(
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
                   ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(15)),
-                  height: 80,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text(
-                      'This is for the descriptionThis is for the descriptionThis is for the descriptionThis is for the descriptionThis is for the description',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15, right: 15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(15)),
+                    height: 80,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        objectData[object]['description'].toString(),
+                        style: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    style: TextButton.styleFrom(backgroundColor: Colors.black),
-                    onPressed: () async {
-                      print(picture);
-                      print(widget.file.path);
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ObjectSentence(files, label),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      "In a sentence",
-                      style: TextStyle(color: Colors.white),
+                Gap(15),
+                Expanded(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.pink),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                objectData[object]['s1'].toString(),
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.pink),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                objectData[object]['s2'].toString(),
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 120,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.pink),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                objectData[object]['s3'].toString(),
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
