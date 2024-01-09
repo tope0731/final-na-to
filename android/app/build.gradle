@@ -2,6 +2,8 @@ plugins {
     id "com.android.application"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    
+    
 }
 
 def localProperties = new Properties()
@@ -21,6 +23,8 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+
+
 
 android {
     namespace "com.example.final_ito"
@@ -64,4 +68,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+ 
+}
+
+

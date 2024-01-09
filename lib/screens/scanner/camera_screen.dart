@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:final_ito/components/appbar.dart';
 import 'package:final_ito/main.dart';
 import 'package:final_ito/screens/scanner/image_description.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class _nameState extends State<CameraScreen> {
   File? file;
   var _recognitions;
   var v = "";
+  @override
   void initState() {
     super.initState();
     loadmodel().then((value) {
@@ -44,6 +46,32 @@ class _nameState extends State<CameraScreen> {
     });
   }
 
+  void _showDialog() {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return CupertinoAlertDialog(
+            title: Icon(
+              Icons.error,
+              size: 50,
+              color: Colors.red.shade500,
+            ),
+            content: const Text(
+                'The image is too blurry or unclear. Please capture a sharp and well-lit image.'),
+            actions: [
+              Center(
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Got it!'),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   loadmodel() async {
     await Tflite.loadModel(
       model: "assets/model/model.tflite",
@@ -66,13 +94,13 @@ class _nameState extends State<CameraScreen> {
       v = recognitions.toString();
       // dataList = List<Map<String, dynamic>>.from(jsonDecode(v));
     });
-    print(v);
-    print("//////////////////////////////////////////////////");
-    print(_recognitions);
+    //print(v);
+    //print("//////////////////////////////////////////////////");
+    //print(_recognitions);
     // print(dataList);
-    print("//////////////////////////////////////////////////");
+    //print("//////////////////////////////////////////////////");
     int endTime = DateTime.now().millisecondsSinceEpoch;
-    print("Inference took ${endTime - startTime}ms");
+    //print("Inference took ${endTime - startTime}ms");
     return v;
   }
 
@@ -81,86 +109,78 @@ class _nameState extends State<CameraScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-        ),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 30,
+              ),
+              //replace with our own icon data.
+            )),
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               height: double.infinity,
               child: CameraPreview(_controller),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                  child: Container(
-                    height: 50,
-                    width: double.infinity,
-                    margin: EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF89CFF3),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
-                    child: MaterialButton(
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.18,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  color: Colors.black,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: IconButton(
                       onPressed: () async {
                         try {
                           await _controller.setFlashMode(FlashMode.auto);
                           XFile file = await _controller.takePicture();
                           await detectimage(file.path);
                           //eto yung tama
-                          // if (_recognitions[0]['confidence'] < .98) {
-                          //   print("try again");
-                          //   showDialog(
-                          //     context: context,
-                          //     builder: (_) => AlertDialog(
-                          //       content: Text("Try Again"),
-                          //       title: Text("For Alert Message"),
-                          //     ),
-                          //     barrierDismissible: true,
-                          //   );
-                          // } else {
-                          //   var flabel = _recognitions[0]['label'].toString();
-                          //   var confidence = _recognitions[0]['confidence'];
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           ImagePreview(file, flabel, confidence),
-                          //     ),
-                          //   );
-                          // }
-                          //trydito
-                          //print('this is the file: $file');
-                          var flabel = _recognitions[0]['label'].toString();
-                          var confidence = _recognitions[0]['confidence'];
-                          Navigator.push(
+                          if (_recognitions[0]['confidence'] < .98) {
+                            print("try again");
+                            _showDialog();
+                          } else {
+                            var flabel = _recognitions[0]['label'].toString();
+                            var confidence = _recognitions[0]['confidence'];
+
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ImageDescription(
-                                      file, flabel, confidence)));
+                                builder: (context) =>
+                                    ObjectDescription(file, flabel, confidence),
+                              ),
+                            );
+                          }
                         } on CameraException catch (e) {
                           debugPrint("Error occured while taking picture : $e");
-                          return null;
+                          return;
                         }
                       },
-                      child: Text(
-                        "Take Picture",
-                        style: TextStyle(
-                          fontSize: 23,
-                          color: Colors.white,
-                        ),
+                      iconSize: 50,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      icon: const Icon(
+                        Icons.circle,
+                        color: Colors.white,
+                        size: 70,
                       ),
-                    ),
-                  ),
+                    )),
+                  ],
                 ),
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),

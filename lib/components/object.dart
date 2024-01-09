@@ -1,7 +1,8 @@
 var objectData = [
   {
     'name': 'BAG',
-    'imgName': 'BAG.jpg',
+    'imgName': 'bagg.png',
+    'image': 'bag.png',
     'description':
         'A bag is like a big pocket with handles. It holds your toys, snacks, and things you need when you go out.',
     's1':
@@ -13,7 +14,8 @@ var objectData = [
   },
   {
     'name': 'BOOK',
-    'imgName': 'BOOK.jpg',
+    'imgName': 'Book.png',
+    'image': 'libro.png',
     'description':
         'Books are like special friends made of paper. They have stories and pictures that you can read and enjoy.',
     's1':
@@ -25,7 +27,8 @@ var objectData = [
   },
   {
     'name': 'CHAIR',
-    'imgName': 'CHAIR.jpg',
+    'imgName': 'Chair.png',
+    'image': 'upuan.png',
     'description':
         'A chair is a special seat for sitting. It keeps you comfy when you read, eat, or play.',
     's1': 'A chair is for sitting. It is like a comfy seat for you.',
@@ -36,7 +39,8 @@ var objectData = [
   },
   {
     'name': 'RULER',
-    'imgName': 'RULER.jpg',
+    'imgName': 'Ruler.png',
+    'image': 'line.png',
     'description':
         'A ruler is a long, straight tool with numbers. It helps you draw straight lines and measure things.',
     's1':
@@ -48,7 +52,8 @@ var objectData = [
   },
   {
     'name': 'PENCIL',
-    'imgName': 'PENCIL.jpg',
+    'imgName': 'Pencil.png',
+    'image': 'lapis.png',
     'description':
         'A pencil is a writing tool with a point. You use it for drawing and writing, and you can sharpen it when the point gets dull.',
     's1':
@@ -60,7 +65,8 @@ var objectData = [
   },
   {
     'name': 'NOTEBOOK',
-    'imgName': 'NOTEBOOK.jpg',
+    'imgName': 'Notebook.png',
+    'image': 'sulat.png',
     'description':
         'A notebook is like your personal paper book. You can write in it, draw pictures, and keep all your thoughts in one place.',
     's1':
@@ -72,7 +78,8 @@ var objectData = [
   },
   {
     'name': 'CRAYONS',
-    'imgName': 'CRAYONS.jpeg',
+    'imgName': 'Crayons.png',
+    'image': 'kulay.png',
     'description':
         'Crayons are colorful sticks for drawing. You use them to make your pictures bright and happy.',
     's1':
@@ -84,7 +91,8 @@ var objectData = [
   },
   {
     'name': 'ERASER',
-    'imgName': 'ERASER.jpg',
+    'imgName': 'Eraser.png',
+    'image': 'pambura.png',
     'description':
         'An eraser helps you fix mistakes. It is like magic for taking away pencil marks and making your work look neat.',
     's1':
@@ -96,7 +104,8 @@ var objectData = [
   },
   {
     'name': 'SHOES',
-    'imgName': 'SHOES.jpg',
+    'imgName': 'Shoes.png',
+    'image': 'sapatos.png',
     'description':
         'Shoes are things you wear on your feet. They protect your feet and make it comfortable to walk and run.',
     's1':
@@ -108,7 +117,8 @@ var objectData = [
   },
   {
     'name': 'SCISSORS',
-    'imgName': 'SCISSORS.png',
+    'imgName': 'Scissor.png',
+    'image': 'gunting.png',
     'description':
         'Scissors are tools for cutting paper or making crafts. They have two blades that open and close.',
     's1':

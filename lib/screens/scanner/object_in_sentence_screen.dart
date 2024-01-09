@@ -22,7 +22,7 @@ class _ObjectSentenceState extends State<ObjectSentence> {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage(
                 "assets/images/for_scanner.png",
@@ -51,18 +51,18 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                 ),
                 Container(
                   width: 220,
-                  decoration: BoxDecoration(color: Colors.yellow),
+                  decoration: const BoxDecoration(color: Colors.yellow),
                   child: Center(
                     child: Text(
                       label,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.blue,
                           fontSize: 22,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Expanded(
@@ -80,13 +80,13 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                                 border: Border.all(color: Colors.pink)),
                             child: TextButton(
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 'Sentence 1',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Container(
@@ -97,13 +97,13 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                                 border: Border.all(color: Colors.green)),
                             child: TextButton(
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 'Sentence 2',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Container(
@@ -114,7 +114,7 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                                 border: Border.all(color: Colors.black)),
                             child: TextButton(
                               onPressed: () {},
-                              child: Text(
+                              child: const Text(
                                 'Sentence 3',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -128,7 +128,7 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                 Container(
                   width: double.infinity,
                   child: TextButton(
-                    style: ButtonStyle(
+                    style: const ButtonStyle(
                         backgroundColor:
                             MaterialStatePropertyAll(Colors.black)),
                     onPressed: () {
@@ -139,7 +139,7 @@ class _ObjectSentenceState extends State<ObjectSentence> {
                         ),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Go Home',
                       style: TextStyle(color: Colors.white),
                     ),

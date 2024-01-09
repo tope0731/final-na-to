@@ -1,139 +1,143 @@
-import 'package:final_ito/drawer/list_of_object.dart';
-import 'package:final_ito/drawer/request_object.dart';
-import 'package:final_ito/drawer/switch_account.dart';
-import 'package:final_ito/screens/game/game.dart';
-import 'package:final_ito/screens/login/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:final_ito/components/appbar.dart';
+import 'package:final_ito/components/drawer.dart';
+import 'package:final_ito/screens/game/choose_game.dart';
+import 'package:final_ito/screens/onboarding/onboarding.dart';
 import 'package:final_ito/screens/scanner/camera_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_shadow/simple_shadow.dart';
 
-class HomePageScreen extends StatelessWidget {
-  const HomePageScreen({super.key});
+class HomePageScreen extends StatefulWidget {
+  HomePageScreen({super.key});
+
+  @override
+  State<HomePageScreen> createState() => _HomePageScreenState();
+}
+
+class _HomePageScreenState extends State<HomePageScreen> {
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      extendBodyBehindAppBar: true,
-      endDrawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF89CFF3)),
-              child: Center(
-                child: Text(
-                  'Teacher',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
+    //print(docIDs);
+    //print('line 36666 ${user.uid}');
+    return SafeArea(
+      child: Scaffold(
+        // appBar: apbar(context),
+        extendBodyBehindAppBar: true,
+
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Color(0xFF60bbcf),
+              size: 45,
             ),
-            ListTile(
-              leading: Icon(Icons.person),
-              onTap: () {},
-              title: const Text('Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.manage_accounts),
-              onTap: () {},
-              title: const Text('Students'),
-            ),
-            ListTile(
-              leading: Icon(Icons.list),
-              onTap: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (_) => ListOfObject()));
-              },
-              title: const Text('List of Objects'),
-            ),
-            ListTile(
-              leading: Icon(Icons.request_page),
-              onTap: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (_) => const RequestObject()));
-              },
-              title: const Text('Request Object'),
-            ),
-            ListTile(
-              leading: Icon(Icons.switch_account),
-              onTap: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (_) => const SwitchAccount()));
-              },
-              title: const Text('Switch Account'),
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              onTap: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (_) => const LoginScreen()));
-              },
-              title: const Text('Logout'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                  icon: Icon(Icons.widgets),
+                  onPressed: () => Scaffold.of(context).openEndDrawer(),
+                  tooltip:
+                      MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  iconSize: 45,
+                  color: Color(0xFF60bbcf)),
             ),
           ],
         ),
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/loading.png'),
-            fit: BoxFit.cover,
+        endDrawer: const drawer(),
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/home_bg.jpg'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 180),
-              Image.asset('assets/images/finalLogo.png'),
-              const SizedBox(height: 10),
-              const Text(
-                'Welcome to iSee teacher!',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                height: 100,
-                width: 250,
-                child: const Text(
-                  '"Explore, Imagine, Discover: Pixel Playtime - Where pictures come to life, just for kids!"',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  textAlign: TextAlign.center,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 140),
+                Image.asset(
+                  'assets/images/finalLogo.png',
                 ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (_) => const Game(),
-                    ),
-                  );
-                },
-                child: Image.asset(
-                  'assets/images/games_button.png',
-                  height: 120,
+                const SizedBox(height: 10),
+                const Text(
+                  'Welcome to iSee',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                 ),
-              ),
-              const SizedBox(height: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (_) => const CameraScreen(),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    '"Explore, Imagine, Discover: Pixel Playtime - Where pictures come to life, just for kids!"',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) => const CameraScreen(),
+                      ),
+                    );
+                  },
+                  child: SimpleShadow(
+                    opacity: 0.3,
+                    color: Colors.black,
+                    offset: const Offset(3, 4),
+                    sigma: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/explore_btn.png',
+                        height: 100,
+                        width: 320,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
-                  );
-                },
-                child: Image.asset('assets/images/scan_button.png'),
-              ),
-            ],
+                  ),
+                ),
+                const SizedBox(height: 5),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (_) => games(),
+                      ),
+                    );
+                  },
+                  child: SimpleShadow(
+                    opacity: 0.3,
+                    color: Colors.black,
+                    offset: const Offset(3, 4),
+                    sigma: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        'assets/images/game_btn.png',
+                        height: 100,
+                        width: 320,
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

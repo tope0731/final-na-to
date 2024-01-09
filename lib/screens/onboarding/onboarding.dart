@@ -1,24 +1,26 @@
-import 'package:final_ito/screens/login/loading_screen.dart';
+import 'package:final_ito/auth/auth_page.dart';
+import 'package:final_ito/screens/home_screen.dart';
+import 'package:final_ito/screens/login/login_screen.dart';
 import 'package:final_ito/screens/onboarding/screens/onboarding1.dart';
 import 'package:final_ito/screens/onboarding/screens/onboarding2.dart';
 import 'package:final_ito/screens/onboarding/screens/onboarding3.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class onBoardingScreen extends StatefulWidget {
-  onBoardingScreen({super.key});
+  const onBoardingScreen({super.key});
 
   @override
   State<onBoardingScreen> createState() => _onBoardingScreenState();
 }
 
 class _onBoardingScreenState extends State<onBoardingScreen> {
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
 
   //for tracking of pageview
   bool onLastPage = false;
+  bool onFirstPage = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,66 +32,97 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
             onPageChanged: (index) {
               setState(() {
                 onLastPage = (index == 2);
+                onFirstPage = (index != 0);
               });
             },
-            children: [
-              IntroPage1(),
-              IntroPage2(),
-              IntroPage3(),
+            children: const [
+              Page1(),
+              Page2(),
+              Page3(),
             ],
           ),
           Container(
-            alignment: Alignment(0, 0.75),
+            alignment: const Alignment(0, 0.75),
             child: Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
+              padding: const EdgeInsets.only(left: 25, right: 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFfefefd),
+                        ),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => AuthPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                              color: Color(0xFF4050b5),
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Gap(555),
                   SmoothPageIndicator(controller: _controller, count: 3),
-                  Gap(30),
+                  const Gap(30),
                   onLastPage
-                      ? Container(
+                      ? SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF89CFF3),
-                              fixedSize: Size(175, 50),
+                              backgroundColor: const Color(0xFFfefefd),
+                              fixedSize: const Size(175, 50),
                             ),
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                CupertinoPageRoute(
-                                    builder: (_) => LoadingScreen()),
+                                MaterialPageRoute(builder: (_) => AuthPage()),
                               );
                             },
-                            child: Text(
-                              'Home',
-                              style: TextStyle(fontSize: 20),
+                            child: const Text(
+                              '''Let's Start!''',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF4050b5),
+                                  fontWeight: FontWeight.w900),
                             ),
                           ),
                         )
-                      : Container(
+                      : SizedBox(
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Color(0xFF89CFF3),
-                              fixedSize: Size(175, 50),
+                              backgroundColor: const Color(0xFFfefefd),
+                              fixedSize: const Size(175, 50),
                             ),
                             onPressed: () {
                               _controller.nextPage(
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeIn,
                               );
                             },
                             child: Text(
-                              'Next',
-                              style: TextStyle(fontSize: 20),
+                              onFirstPage ? 'Next' : 'Begin',
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF4050b5),
+                                  fontWeight: FontWeight.w900),
                             ),
                           ),
                         ),
-                  Gap(30)
+                  const Gap(30)
                 ],
               ),
             ),

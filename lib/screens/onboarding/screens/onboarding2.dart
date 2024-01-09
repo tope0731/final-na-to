@@ -1,49 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class IntroPage2 extends StatelessWidget {
-  const IntroPage2({super.key});
+class Page2 extends StatelessWidget {
+  const Page2({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xAAC3EEFF),
+      color: const Color(0xAAC3EEFF),
       child: SafeArea(
-        child: Column(
-          children: [
-            Gap(50),
-            Center(
-              child: Text(
-                'iSee',
-                style: TextStyle(
-                  fontSize: 60,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF056FD0),
+        child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "assets/images/onboarding2.jpg",
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Gap(100),
+                Container(
+                  height: 320,
+                  width: 320,
+                  decoration: BoxDecoration(
+                    border:
+                        Border.all(color: const Color(0xFF00c4de), width: 7),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.asset(
+                    'assets/images/P2.jpg',
+                    height: 350,
+                    width: 340,
+                  ),
                 ),
-              ),
+                const Gap(15),
+                const Text(
+                  'Explore',
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFF4050b5)),
+                ),
+                const Gap(10),
+                const Center(
+                  child: Text(
+                    '''Take a moment to explore around you, enjoy the fun of looking closely, and get excited about finding objects''',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF4050b5)),
+                  ),
+                ),
+              ],
             ),
-            Center(
-              child: Text(
-                '"See the world differently"',
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF056FD0),
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            Image(
-              image: AssetImage('assets/images/onboarding2.png'),
-            ),
-            Gap(20),
-            Text(
-              'Your Creativity will shine here',
-              style: TextStyle(
-                fontSize: 20,
-                color: Color(0xFF056FD0),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
