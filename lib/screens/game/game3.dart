@@ -617,7 +617,7 @@ class ResultPage extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       CupertinoPageRoute(
-                        builder: (_) => games(),
+                        builder: (_) => Games(),
                       ),
                     );
                   },

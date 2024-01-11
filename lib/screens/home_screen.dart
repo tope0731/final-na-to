@@ -64,14 +64,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 140),
+                const SizedBox(height: 200),
                 Image.asset(
                   'assets/images/finalLogo.png',
                 ),
                 const SizedBox(height: 10),
                 const Text(
                   'Welcome to iSee',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
                 ),
                 const SizedBox(height: 10),
                 const Padding(
@@ -83,7 +83,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 80,
+                  height: 200,
                 ),
                 InkWell(
                   onTap: () {
@@ -116,7 +116,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     Navigator.push(
                       context,
                       CupertinoPageRoute(
-                        builder: (_) => games(),
+                        builder: (_) => Games(),
                       ),
                     );
                   },

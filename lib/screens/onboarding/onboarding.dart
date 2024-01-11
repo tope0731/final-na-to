@@ -48,6 +48,9 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -72,7 +75,7 @@ class _onBoardingScreenState extends State<onBoardingScreen> {
                       ),
                     ],
                   ),
-                  const Gap(555),
+                  const Gap(705),
                   SmoothPageIndicator(controller: _controller, count: 3),
                   const Gap(30),
                   onLastPage

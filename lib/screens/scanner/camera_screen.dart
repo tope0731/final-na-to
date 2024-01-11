@@ -96,7 +96,7 @@ class _nameState extends State<CameraScreen> {
     });
     //print(v);
     //print("//////////////////////////////////////////////////");
-    //print(_recognitions);
+    print(_recognitions);
     // print(dataList);
     //print("//////////////////////////////////////////////////");
     int endTime = DateTime.now().millisecondsSinceEpoch;
@@ -148,11 +148,13 @@ class _nameState extends State<CameraScreen> {
                           XFile file = await _controller.takePicture();
                           await detectimage(file.path);
                           //eto yung tama
-                          if (_recognitions[0]['confidence'] < .98) {
+                          print(_recognitions[0]['confidence']);
+                          if (_recognitions[0]['confidence'] < .75) {
                             print("try again");
                             _showDialog();
                           } else {
                             var flabel = _recognitions[0]['label'].toString();
+                            print(flabel);
                             var confidence = _recognitions[0]['confidence'];
 
                             Navigator.push(

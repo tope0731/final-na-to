@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:final_ito/screens/game/choose_game.dart';
 import 'package:final_ito/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
@@ -119,6 +120,7 @@ class _QuizScreenState extends State<QuizScreen> {
     String correctAnswer = questions[currentQuestionIndex]
         .options[questions[currentQuestionIndex].correctOption]
         .toLowerCase();
+    bool isFinished = false;
 
     if (userAnswer == correctAnswer && totalScore < 100) {
       QuickAlert.show(
@@ -134,6 +136,18 @@ class _QuizScreenState extends State<QuizScreen> {
 
         if (currentQuestionIndex >= questions.length) {
           currentQuestionIndex = 0;
+        }
+        if (totalScore == 100) {
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            title: 'Good Job!',
+            text: 'Your Answer is Correct.',
+          );
+          isFinished = true;
+        }
+        if (isFinished == true) {
+          Navigator.push(context, MaterialPageRoute(builder: (_) => Games()));
         }
       });
     } else {
@@ -185,27 +199,15 @@ class _QuizScreenState extends State<QuizScreen> {
                 width: 300.0,
               ),
               SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Text(
-                  //   'Level $currentLevel',
-                  //   style: TextStyle(
-                  //     fontSize: 30.0,
-                  //     fontWeight: FontWeight.bold,
-                  //     color: Color(0xFF0C6699),
-                  //   ),
-                  // ),
-                  SizedBox(height: 20.0),
-                  Text(
-                    'Score: $totalScore',
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF0C6699),
-                    ),
+              Center(
+                child: Text(
+                  'Score: $totalScore',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0C6699),
                   ),
-                ],
+                ),
               ),
               SizedBox(height: 20.0),
               Padding(
