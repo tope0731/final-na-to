@@ -1,4 +1,5 @@
 import 'package:final_ito/components/object.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ObjectList extends StatefulWidget {
@@ -9,7 +10,46 @@ class ObjectList extends StatefulWidget {
 }
 
 class _ObjectListState extends State<ObjectList> {
-  int tappedIndex = -1; // Track the tapped index, -1 means no card tapped
+  int tappedIndex = -1;
+
+  void showAlertDialog() {
+    if (tappedIndex != -1) {
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Column(
+              children: [
+                Text(
+                  '${objectData[tappedIndex]['name']}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                    height:
+                        8), // Adjust the height according to your preference
+                Text(
+                  '${objectData[tappedIndex]['description']}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            content: Image.asset(
+              'assets/images/${objectData[tappedIndex]['image'].toString()}',
+            ),
+            actions: [
+              CupertinoDialogAction(
+                child: Text("Continue"),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +82,9 @@ class _ObjectListState extends State<ObjectList> {
         extendBodyBehindAppBar: false,
         body: Column(
           children: [
-            SizedBox(
-              height: 250,
+            Expanded(
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
+                scrollDirection: Axis.vertical,
                 itemCount: objectData.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
@@ -53,23 +92,27 @@ class _ObjectListState extends State<ObjectList> {
                       setState(() {
                         tappedIndex = index;
                       });
-                      //print('Card tapped at index $index');
+                      showAlertDialog(); // Call the function to show the dialog
                     },
                     child: Card(
+                      key: ValueKey<int>(index),
+                      color: Colors.transparent,
+                      elevation: 20,
                       child: Stack(
                         children: [
-                          Container(
-                            height: 250,
-                            width: 270,
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/${objectData[index]['imgName'].toString()}',
+                          Center(
+                            child: Container(
+                              height: 220,
+                              width: 350,
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/${objectData[index]['imgName'].toString()}',
+                                  ),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.center,
                                 ),
-                                fit: BoxFit.cover,
-                                alignment: Alignment.center,
                               ),
                             ),
                           ),
@@ -84,7 +127,7 @@ class _ObjectListState extends State<ObjectList> {
                                 objectData[index]['name'].toString(),
                                 style: const TextStyle(
                                   color: Color(0xFF0C6699),
-                                  fontSize: 20,
+                                  fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign:
@@ -97,60 +140,6 @@ class _ObjectListState extends State<ObjectList> {
                     ),
                   );
                 },
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ), // Adding space between the card list and container
-
-            // Container to show tapped card details
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: tappedIndex != -1
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${objectData[tappedIndex]['name']}',
-                            style: const TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Image.asset(
-                            'assets/images/${objectData[tappedIndex]['image'].toString()}',
-                            height: 250,
-                            width:
-                                400, // Adjust the height as needed for enlargement
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                          ),
-                          const SizedBox(height: 10),
-
-                          Text(
-                            '${objectData[tappedIndex]['description']}',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                            textAlign: TextAlign.center, // Center align text
-                          ),
-                          // Add other details you want to display
-                        ],
-                      )
-                    : const SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Nothing to see here"),
-                            Text("Scroll to right to see objects"),
-                          ],
-                        ),
-                      ), // If no card tapped, show an empty SizedBox
               ),
             ),
           ],

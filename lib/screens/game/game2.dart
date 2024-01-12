@@ -115,6 +115,21 @@ class _QuizScreenState extends State<QuizScreen> {
     // Add more questions for other levels
   ];
 
+ void QuitGame() {
+  QuickAlert.show(
+    context: context,
+    type: QuickAlertType.confirm,
+    text: 'Are you sure you want to end the game?',
+    confirmBtnText: 'Yes',
+    cancelBtnText: 'No',
+    confirmBtnColor: Colors.green,
+    onConfirmBtnTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => Games()));
+    },
+  );
+}
+
+
   void checkAnswer() {
     String userAnswer = answerController.text.trim().toLowerCase();
     String correctAnswer = questions[currentQuestionIndex]
@@ -234,7 +249,8 @@ class _QuizScreenState extends State<QuizScreen> {
                             text: questions[currentQuestionIndex].descp,
                           );
                         },
-                        icon: Icon(Icons.lightbulb_sharp)),
+                        icon: Icon(Icons.lightbulb_sharp,
+                        color: Color(0xFF597E52),),),
                     label: Text("Your Answer"),
                     hintText: "Enter Answer Here",
                     hintStyle: TextStyle(color: Color(0xFF0C6699)),
@@ -268,6 +284,36 @@ class _QuizScreenState extends State<QuizScreen> {
                 },
                 child: Text(
                   'Submit Answer',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(10),
+                  fixedSize: Size(230, 80),
+                  textStyle: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  primary: Color(0xFF7D0A0A),
+                  onPrimary: Colors.black87,
+                  shadowColor: Color(0xFF7D0A0A),
+                  side: BorderSide(
+                    color: Colors.black87,
+                    width: 2,
+                  ),
+                  shape: StadiumBorder(),
+                ),
+                onPressed: () {
+                  QuitGame();
+                },
+                child: Text(
+                  'Quit Game',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

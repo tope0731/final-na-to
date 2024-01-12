@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:final_ito/auth/main_page.dart';
+import 'package:final_ito/drawer/list_of_object.dart';
 import 'package:final_ito/firebase_options.dart';
+import 'package:final_ito/screens/game/game2.dart';
 import 'package:final_ito/screens/onboarding/onboarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class iSee extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainPage(),
+      home: MainPage(),
     );
   }
 }
